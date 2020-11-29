@@ -1,10 +1,53 @@
 <template>
-  <div v-if="loaded">
-    <h1 class="title">Dashboard</h1>
+  <div>
+    <div v-if="!loaded" class="text-center">
+      <v-progress-circular
+        indeterminate
+        color="blue-grey"
+      ></v-progress-circular>
+    </div>
 
-    <v-container>
-      <v-row>
+    <v-container v-if="loaded">
+      <v-row class="d-flex justify-center">
+        <!-- Legend -->
         <v-col cols="12" md="4">
+          <div class="text-center">
+            <span class="mr-2"
+              ><v-icon left large color="blue-grey lighten-4">
+                mdi-checkbox-blank</v-icon
+              >Slobodna parking mjesta</span
+            >
+            <v-spacer></v-spacer>
+            <span
+              ><v-icon left large color="blue-grey"> mdi-checkbox-blank</v-icon
+              >Zauzeta parking mjesta</span
+            >
+          </div>
+
+          <!-- Statistics -->
+          <v-card class="mx-auto my-5" max-width="300px" elevation="0">
+            <v-card-title class="d-flex justify-center">
+              Slobodna mjesta
+            </v-card-title>
+            <v-card-text class="text-center">
+              <h1 class="title">60/62</h1>
+            </v-card-text>
+          </v-card>
+
+          <!-- Event log -->
+          <v-card>
+            <v-card-title class="blue-grey white--text overline py-2">Event log</v-card-title>
+            <v-card-text class="py-2">
+              <p>Lorem ipsum</p>
+              <p>Lorem ipsum</p>
+              <p>Lorem ipsum</p>
+              <p>Lorem ipsum</p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+
+        <!-- Parking rows -->
+        <v-col cols="12" md="2">
           <div
             v-for="parking in allParkingSpaces[0].parkingSpaces"
             :key="parking.id"
@@ -25,7 +68,7 @@
           </div>
         </v-col>
 
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="2">
           <div
             v-for="parking in allParkingSpaces[1].parkingSpaces"
             :key="parking.id"
@@ -46,7 +89,7 @@
           </div>
         </v-col>
 
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="2">
           <div
             v-for="parking in allParkingSpaces[2].parkingSpaces"
             :key="parking.id"
@@ -91,9 +134,13 @@ export default {
     ...mapGetters(["allParkingSpaces"]),
   },
   created() {
-    this.fetchAllParkingSpaces().then(() => {
-      this.loaded = true;
-    });
+    this.fetchAllParkingSpaces()
+      .then(() => {
+        this.loaded = true;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

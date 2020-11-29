@@ -5,7 +5,7 @@
         <Navbar />
       </div>
 
-      <router-view class="pa-4" />
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -37,12 +37,10 @@ export default {
 }
 
 .parking-space {
-  border: 1px solid #000;
-  border-radius: 5px;
+  border-radius: 3px;
   color: #fff;
-  padding: 8px;
-  margin-bottom: 8px;
-  width: 10rem;
+  margin-bottom: 2px;
+  width: 5rem;
   font-weight: 600;
 }
 </style>
