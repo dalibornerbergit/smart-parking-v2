@@ -19,6 +19,14 @@ export default {
   components: { Navbar },
 
   data: () => ({}),
+  sockets: {
+    connect: function () {
+      console.log("Socket connected");
+    },
+    "parking-lot-state-change": function (data) {
+      console.log("Data", data);
+    },
+  },
   computed: {
     ...mapGetters(["getUser"]),
   },
