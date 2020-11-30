@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto mt-15" max-width="600px">
+    <v-card elevation="0" class="mx-auto mt-15" max-width="600px">
       <v-card-title
         class="blue-grey white--text overline d-flex justify-center"
       >

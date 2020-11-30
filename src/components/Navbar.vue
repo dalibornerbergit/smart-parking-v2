@@ -50,6 +50,21 @@
           <span class="red--text">Logout</span>
         </v-tooltip>
       </div>
+      <div v-if="!getUser && !checkRoute">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+              @click="$router.push({ name: 'login' })"
+            >
+              <v-icon>mdi-account-circle</v-icon>
+            </v-btn>
+          </template>
+          <span class="white--text">Login</span>
+        </v-tooltip>
+      </div>
     </v-app-bar>
 
     <!-- Sidebar -->
@@ -103,6 +118,9 @@ export default {
   }),
   computed: {
     ...mapGetters(["getUser"]),
+    checkRoute() {
+      return this.$route.name === "login";
+    },
   },
   methods: {
     logOut() {

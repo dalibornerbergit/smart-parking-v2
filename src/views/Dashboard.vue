@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!loaded" class="text-center">
+    <div v-if="!loaded" class="text-center mt-15">
       <v-progress-circular
         indeterminate
         color="blue-grey"
@@ -8,24 +8,29 @@
     </div>
 
     <v-container v-if="loaded">
-      <v-row class="d-flex justify-center">
+      <v-row>
         <!-- Legend -->
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="6">
           <div class="text-center">
-            <span class="mr-2"
-              ><v-icon left large color="blue-grey lighten-4">
+            <span
+              >Slobodna parking mjesta<v-icon
+                right
+                large
+                color="blue-grey lighten-4"
+              >
                 mdi-checkbox-blank</v-icon
-              >Slobodna parking mjesta</span
+              ></span
             >
             <v-spacer></v-spacer>
             <span
-              ><v-icon left large color="blue-grey"> mdi-checkbox-blank</v-icon
-              >Zauzeta parking mjesta</span
+              >Zauzeta parking mjesta<v-icon right large color="blue-grey">
+                mdi-checkbox-blank</v-icon
+              ></span
             >
           </div>
 
           <!-- Statistics -->
-          <v-card class="mx-auto my-5" max-width="300px" elevation="0">
+          <v-card class="mx-auto my-5" elevation="0">
             <v-card-title class="d-flex justify-center">
               Slobodna mjesta
             </v-card-title>
@@ -40,7 +45,7 @@
           </v-card>
 
           <!-- Event log -->
-          <v-card>
+          <v-card elevation="0">
             <v-card-title class="blue-grey white--text overline py-2"
               >Event log</v-card-title
             >
@@ -57,67 +62,71 @@
         </v-col>
 
         <!-- Parking rows -->
-        <v-col cols="12" md="2">
-          <div
-            v-for="parking in allParkingSpaces[0].parkingSpaces"
-            :key="parking.id"
-            class="d-flex justify-center"
-          >
-            <div
-              v-if="!parking.occupied"
-              class="text-center parking-space blue-grey lighten-4 black--text"
-            >
-              {{ parking.id }}
-            </div>
-            <div
-              v-if="parking.occupied"
-              class="text-center parking-space blue-grey"
-            >
-              {{ parking.id }}
-            </div>
-          </div>
-        </v-col>
+        <v-col class="py-0" cols="12" md="6">
+          <v-row class="d-flex justify-center">
+            <v-col cols="12" md="2">
+              <div
+                v-for="parking in allParkingSpaces[0].parkingSpaces"
+                :key="parking.id"
+                class="d-flex justify-center"
+              >
+                <div
+                  v-if="!parking.occupied"
+                  class="text-center parking-space blue-grey lighten-4 black--text"
+                >
+                  {{ parking.id }}
+                </div>
+                <div
+                  v-if="parking.occupied"
+                  class="text-center parking-space blue-grey"
+                >
+                  {{ parking.id }}
+                </div>
+              </div>
+            </v-col>
 
-        <v-col cols="12" md="2">
-          <div
-            v-for="parking in allParkingSpaces[1].parkingSpaces"
-            :key="parking.id"
-            class="d-flex justify-center"
-          >
-            <div
-              v-if="!parking.occupied"
-              class="text-center parking-space blue-grey lighten-4 black--text"
-            >
-              {{ parking.id }}
-            </div>
-            <div
-              v-if="parking.occupied"
-              class="text-center parking-space blue-grey"
-            >
-              {{ parking.id }}
-            </div>
-          </div>
-        </v-col>
+            <v-col cols="12" md="2">
+              <div
+                v-for="parking in allParkingSpaces[1].parkingSpaces"
+                :key="parking.id"
+                class="d-flex justify-center"
+              >
+                <div
+                  v-if="!parking.occupied"
+                  class="text-center parking-space blue-grey lighten-4 black--text"
+                >
+                  {{ parking.id }}
+                </div>
+                <div
+                  v-if="parking.occupied"
+                  class="text-center parking-space blue-grey"
+                >
+                  {{ parking.id }}
+                </div>
+              </div>
+            </v-col>
 
-        <v-col cols="12" md="2">
-          <div
-            v-for="parking in allParkingSpaces[2].parkingSpaces"
-            :key="parking.id"
-            class="d-flex justify-center"
-          >
-            <div
-              v-if="!parking.occupied"
-              class="text-center parking-space blue-grey lighten-4 black--text"
-            >
-              {{ parking.id }}
-            </div>
-            <div
-              v-if="parking.occupied"
-              class="text-center parking-space blue-grey"
-            >
-              {{ parking.id }}
-            </div>
-          </div>
+            <v-col cols="12" md="2">
+              <div
+                v-for="parking in allParkingSpaces[2].parkingSpaces"
+                :key="parking.id"
+                class="d-flex justify-center"
+              >
+                <div
+                  v-if="!parking.occupied"
+                  class="text-center parking-space blue-grey lighten-4 black--text"
+                >
+                  {{ parking.id }}
+                </div>
+                <div
+                  v-if="parking.occupied"
+                  class="text-center parking-space blue-grey"
+                >
+                  {{ parking.id }}
+                </div>
+              </div>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>

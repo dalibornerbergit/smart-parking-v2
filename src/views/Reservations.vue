@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div v-if="!reservations.length" class="text-center mt-15">
+      <v-progress-circular
+        indeterminate
+        color="blue-grey"
+      ></v-progress-circular>
+    </div>
+
     <v-container>
       <!-- Reservations -->
       <v-row>

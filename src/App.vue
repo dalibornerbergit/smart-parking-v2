@@ -61,6 +61,7 @@ export default {
   margin-bottom: 2px;
   width: 5rem;
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .green-text {
