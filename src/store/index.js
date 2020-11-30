@@ -9,9 +9,20 @@ export default new Vuex.Store({
         user: null,
         events: []
     },
-    getters: {},
-    actions: {},
+    getters: {
+        getUser: (state) => {
+            return state.user
+        }
+    },
+    actions: {
+        getUser(context, user) {
+            context.commit('user', user)
+        }
+    },
     mutations: {
+        user(state, user) {
+            state.user = user
+        }
         // SOCKET_change: (state, event) => state.evets.push(event)
     },
     modules: {

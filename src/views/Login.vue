@@ -30,14 +30,39 @@
       </v-card-text>
       <v-card-actions class="pa-4">
         <v-spacer></v-spacer>
-        <v-btn depressed class="blue-grey white--text"> Login </v-btn>
+        <v-btn @click="login" depressed class="blue-grey white--text">
+          Login
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  data: () => ({
+    email: "",
+    password: "",
+  }),
+  methods: {
+    login() {
+      axios
+        .post("http://localhost:4000/api/user/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          window.location.href = "/";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
 </script>
 
 <style>

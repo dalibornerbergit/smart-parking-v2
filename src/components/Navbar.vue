@@ -33,12 +33,14 @@
         </v-menu>
       </div>
 
-      <span class="white--text d-none d-sm-flex blue-grey py-1 px-2 rounded"
-        >dado@test.com</span
-      >
+      <!-- Email -->
+      <span class="d-none d-sm-flex blue-grey py-1 px-2 rounded">
+        <span class="white--text" v-if="getUser">{{ getUser.email }}</span>
+        <span class="white--text" v-else>Guest</span>
+      </span>
 
       <!-- Logout -->
-      <div>
+      <div v-if="getUser">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on" @click="logOut">
@@ -84,9 +86,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     drawer: false,
+    email: "",
     links: [
       { icon: "mdi-home", text: "home", route: "/" },
       { icon: "mdi-monitor-dashboard", text: "dashboard", route: "/dashboard" },
@@ -97,9 +101,14 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
   methods: {
     logOut() {
-      this.$router.push({ name: "login" });
+      localStorage.removeItem("token");
+      this.$store.dispatch("getUser", null);
+      window.location.href = "/login";
     },
   },
 };

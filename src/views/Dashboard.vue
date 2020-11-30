@@ -30,17 +30,27 @@
               Slobodna mjesta
             </v-card-title>
             <v-card-text class="text-center">
-              <h1 class="title">60/62</h1>
+              <h1 class="title">
+                <span :class="`${counterColor} title`">{{
+                  availableParkingSpaces
+                }}</span
+                >/62
+              </h1>
             </v-card-text>
           </v-card>
 
           <!-- Event log -->
           <v-card>
-            <v-card-title class="blue-grey white--text overline py-2">Event log</v-card-title>
+            <v-card-title class="blue-grey white--text overline py-2"
+              >Event log</v-card-title
+            >
             <v-card-text class="py-2">
               <p>Lorem ipsum</p>
+              <v-divider></v-divider>
               <p>Lorem ipsum</p>
+              <v-divider></v-divider>
               <p>Lorem ipsum</p>
+              <v-divider></v-divider>
               <p>Lorem ipsum</p>
             </v-card-text>
           </v-card>
@@ -132,6 +142,31 @@ export default {
   },
   computed: {
     ...mapGetters(["allParkingSpaces"]),
+    availableParkingSpaces() {
+      let count = 0;
+
+      this.allParkingSpaces[0].parkingSpaces.map((parking) => {
+        if (parking.occupied === 0) count++;
+      });
+      this.allParkingSpaces[1].parkingSpaces.map((parking) => {
+        if (parking.occupied === 0) count++;
+      });
+      this.allParkingSpaces[2].parkingSpaces.map((parking) => {
+        if (parking.occupied === 0) count++;
+      });
+
+      return count;
+    },
+    counterColor() {
+      if (this.availableParkingSpaces < 10) {
+        return "red-text";
+      } else if (this.availableParkingSpaces < 31) {
+        return "yellow-text";
+      } else return "green-text";
+    },
+  },
+  watch: {
+    fetchAllParkingSpaces() {},
   },
   created() {
     this.fetchAllParkingSpaces()

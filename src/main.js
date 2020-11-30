@@ -6,6 +6,15 @@ import router from './router'
 import store from './store'
 import moment from 'moment'
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+
+  (to.name !== 'login' && to.name !== 'dashboard' && to.name !== 'home' && !token) ? next({ name: 'login' }) : next();
+
+  if (to.name === 'login' && token)
+    next({ name: 'dashboard' })
+})
+
 Vue.use(new VueSocketIO({
   debug: true,
   connection: 'https://demo.smart.sum.ba/parking-events',

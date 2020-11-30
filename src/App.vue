@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
 
       <router-view />
     </v-main>
@@ -12,6 +10,8 @@
 
 <script>
 import Navbar from "./components/Navbar";
+import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -19,10 +19,21 @@ export default {
   components: { Navbar },
 
   data: () => ({}),
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
   created() {
-    this.$socket.on("parking-lot-state-change", () => {
-      console.log("DoDo");
-    });
+    if (localStorage.getItem("token")) {
+      axios
+        .get("http://localhost:4000/api/user/me", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          this.$store.dispatch("getUser", response.data.data);
+        });
+    }
   },
 };
 </script>
@@ -42,5 +53,17 @@ export default {
   margin-bottom: 2px;
   width: 5rem;
   font-weight: 600;
+}
+
+.green-text {
+  color: green;
+}
+
+.yellow-text {
+  color: orange;
+}
+
+.red-text {
+  color: red;
 }
 </style>
