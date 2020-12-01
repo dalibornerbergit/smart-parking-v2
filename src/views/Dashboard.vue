@@ -45,18 +45,14 @@
           </v-card>
 
           <!-- Event log -->
-          <v-card elevation="0">
+          <v-card max-height="100px" elevation="0">
             <v-card-title class="blue-grey white--text overline py-2"
               >Event log</v-card-title
             >
             <v-card-text class="py-2">
-              <p>Lorem ipsum</p>
-              <v-divider></v-divider>
-              <p>Lorem ipsum</p>
-              <v-divider></v-divider>
-              <p>Lorem ipsum</p>
-              <v-divider></v-divider>
-              <p>Lorem ipsum</p>
+              <p v-for="event in socketEvents" :key="event.id">
+                {{ event.created_at }} - {{ event.occupied }}
+              </p>
             </v-card-text>
           </v-card>
         </v-col>
@@ -138,33 +134,26 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   data: () => ({
+    socketEvents: [],
     loaded: false,
     parkingSpaces: [],
   }),
+  sockets: {
+    connect: function () {
+      console.log("Socket connected");
+    },
+  },
   methods: {
     ...mapActions(["fetchParkingSpaces"]),
-    async fetchAllParkingSpaces() {
-      await this.fetchParkingSpaces(1);
-      await this.fetchParkingSpaces(3);
-      await this.fetchParkingSpaces(2);
-    },
   },
   computed: {
     ...mapGetters(["allParkingSpaces"]),
     availableParkingSpaces() {
-      let count = 0;
-
-      this.allParkingSpaces[0].parkingSpaces.map((parking) => {
-        if (parking.occupied === 0) count++;
-      });
-      this.allParkingSpaces[1].parkingSpaces.map((parking) => {
-        if (parking.occupied === 0) count++;
-      });
-      this.allParkingSpaces[2].parkingSpaces.map((parking) => {
-        if (parking.occupied === 0) count++;
-      });
-
-      return count;
+      return (
+        this.allParkingSpaces[0].normal_available +
+        this.allParkingSpaces[1].normal_available +
+        this.allParkingSpaces[2].normal_available
+      );
     },
     counterColor() {
       if (this.availableParkingSpaces < 10) {
@@ -174,16 +163,17 @@ export default {
       } else return "green-text";
     },
   },
-  watch: {
-    fetchAllParkingSpaces() {},
-  },
   created() {
-    this.fetchAllParkingSpaces()
-      .then(() => {
+    this.sockets.subscribe("parking-lot-ramp-state-change", (data) => {
+      // this.allParkingSpaces[data.id_parking_lot - 1].normal_available =
+      //   data.normal_available;
+
+      this.fetchParkingSpaces();
+
+      this.socketEvents.push(data);
+    }),
+      this.fetchParkingSpaces().then(() => {
         this.loaded = true;
-      })
-      .catch((err) => {
-        console.log(err);
       });
   },
 };

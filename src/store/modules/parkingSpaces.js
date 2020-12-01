@@ -9,15 +9,15 @@ const getters = {
 }
 
 const actions = {
-    async fetchParkingSpaces({ commit }, id) {
-        const response = await axios.get(`https://demo.smart.sum.ba/parking/${id}`)
+    async fetchParkingSpaces({ commit }) {
+        const response = await axios.get('https://demo.smart.sum.ba/parking?withParkingSpaces=1')
 
         commit('setParkingSpaces', response.data)
     }
 }
 
 const mutations = {
-    setParkingSpaces: (state, parkingSpaces) => state.parkingSpaces.push(parkingSpaces)
+    setParkingSpaces: (state, parkingSpaces) => state.parkingSpaces = parkingSpaces
 }
 
 export default {
