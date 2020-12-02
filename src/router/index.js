@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import Dashboard from '../views/Dashboard'
 import Reservations from '../views/Reservations'
+import AllReservations from '../views/AllReservations'
 import Login from '../views/Login'
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ const routes = [
         name: 'reservations',
         path: '/reservations',
         component: Reservations
+    },
+    {
+        name: 'all-reservations',
+        path: '/all-reservations',
+        component: AllReservations
     },
     {
         name: 'login',

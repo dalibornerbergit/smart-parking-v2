@@ -11,7 +11,6 @@
 <script>
 import Navbar from "./components/Navbar";
 import axios from "axios";
-import { mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -19,9 +18,6 @@ export default {
   components: { Navbar },
 
   data: () => ({}),
-  computed: {
-    ...mapGetters(["getUser"]),
-  },
   created() {
     if (localStorage.getItem("token")) {
       axios
@@ -31,7 +27,7 @@ export default {
           },
         })
         .then((response) => {
-          this.$store.dispatch("getUser", response.data.data);
+          this.$store.dispatch("setUser", response.data.data);
         });
     }
   },
@@ -54,6 +50,11 @@ export default {
   width: 5rem;
   font-weight: 600;
   font-size: 0.85rem;
+}
+
+.eventWindow {
+  overflow-y: scroll;
+  max-height: 30vh;
 }
 
 .green-text {

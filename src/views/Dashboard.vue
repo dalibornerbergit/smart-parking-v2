@@ -7,10 +7,10 @@
       ></v-progress-circular>
     </div>
 
-    <v-container v-if="loaded">
+    <v-container class="pb-0" v-if="loaded">
       <v-row>
         <!-- Legend -->
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="5">
           <div class="text-center">
             <span
               >Slobodna parking mjesta<v-icon
@@ -30,7 +30,7 @@
           </div>
 
           <!-- Statistics -->
-          <v-card class="mx-auto my-5" elevation="0">
+          <v-card max-width="300px" class="mx-auto my-5" elevation="0">
             <v-card-title class="d-flex justify-center">
               Slobodna mjesta
             </v-card-title>
@@ -45,22 +45,41 @@
           </v-card>
 
           <!-- Event log -->
-          <v-card max-height="100px" elevation="0">
+          <v-card max-width="500px" class="mx-auto" elevation="0">
             <v-card-title class="blue-grey white--text overline py-2"
               >Event log</v-card-title
             >
-            <v-card-text class="py-2">
-              <p v-for="event in socketEvents" :key="event.id">
-                {{ event.created_at }} - {{ event.occupied }}
-              </p>
+            <v-card-text class="eventWindow py-2">
+              <div
+                class="py-2 border"
+                v-for="event in socketEvents"
+                :key="event.id"
+              >
+                {{ event.created_at.substring(0, 10) | formatDate }} -
+                {{ event.created_at.substring(11) }} -
+                <span v-if="!event.occupied" class="overline"
+                  ><b>{{ event.id_parking_space }}</b> oslobođen
+                  <v-icon right large color="blue-grey lighten-4">
+                    mdi-checkbox-blank</v-icon
+                  >
+                </span>
+                <span v-if="event.occupied" class="overline"
+                  ><b>{{ event.id_parking_space }}</b> zauzet
+                  <v-icon right large color="blue-grey">
+                    mdi-checkbox-blank</v-icon
+                  >
+                </span>
+                <v-divider></v-divider>
+              </div>
             </v-card-text>
           </v-card>
         </v-col>
 
         <!-- Parking rows -->
-        <v-col class="py-0" cols="12" md="6">
+        <v-col class="py-0" cols="12" md="7">
           <v-row class="d-flex justify-center">
-            <v-col cols="12" md="2">
+            <v-col class="text-center pt-0" cols="12" md="2">
+              <span class="overline">Zona 1</span>
               <div
                 v-for="parking in allParkingSpaces[0].parkingSpaces"
                 :key="parking.id"
@@ -81,7 +100,8 @@
               </div>
             </v-col>
 
-            <v-col cols="12" md="2">
+            <v-col class="text-center pt-0" cols="12" md="2">
+              <span class="overline">Zona 2</span>
               <div
                 v-for="parking in allParkingSpaces[1].parkingSpaces"
                 :key="parking.id"
@@ -102,7 +122,8 @@
               </div>
             </v-col>
 
-            <v-col cols="12" md="2">
+            <v-col class="text-center pt-0" cols="12" md="2">
+              <span class="overline">Zona 3</span>
               <div
                 v-for="parking in allParkingSpaces[2].parkingSpaces"
                 :key="parking.id"
@@ -134,7 +155,134 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   data: () => ({
-    socketEvents: [],
+    socketEvents: [
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 12,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 1,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 34,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 0,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 44,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 0,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 34,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 1,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 1,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 0,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 8,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 0,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 30,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 1,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 34,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 0,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+      {
+        created_at: "2020-12-02 14:23:08",
+        handicap_available: 0,
+        handicap_occupied: 0,
+        id_parking_lot: 1,
+        id_parking_lot_type: 1,
+        id_parking_space: 34,
+        name: "4",
+        normal_available: 31,
+        normal_occupied: 6,
+        occupied: 0,
+        parking_space_name: "4",
+        type: "Normal",
+      },
+    ],
     loaded: false,
     parkingSpaces: [],
   }),
@@ -165,12 +313,8 @@ export default {
   },
   created() {
     this.sockets.subscribe("parking-lot-ramp-state-change", (data) => {
-      // this.allParkingSpaces[data.id_parking_lot - 1].normal_available =
-      //   data.normal_available;
-
       this.fetchParkingSpaces();
-
-      this.socketEvents.push(data);
+      this.socketEvents.unshift(data);
     }),
       this.fetchParkingSpaces().then(() => {
         this.loaded = true;

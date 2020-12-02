@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!getUserReservations.length" class="text-center mt-15">
+    <div v-if="!getAllReservations.length" class="text-center mt-15">
       <v-progress-circular
         indeterminate
         color="blue-grey"
@@ -13,11 +13,13 @@
         <v-col
           cols="12"
           md="3"
-          v-for="reservation in getUserReservations"
+          v-for="reservation in getAllReservations"
           :key="reservation.id"
         >
           <v-card elevation="0">
-            <v-card-title class="blue-grey white--text py-2"></v-card-title>
+            <v-card-title class="blue-grey white--text body-2 py-2">{{
+              reservation.user.email
+            }}</v-card-title>
             <v-card-text class="py-2">
               <p>{{ reservation.date | formatDate }}</p>
               <p>{{ reservation.parking }}</p>
@@ -34,13 +36,13 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["fetchUserReservations"]),
+    ...mapActions(["fetchAllReservations"]),
     async fetchReservations() {
-      await this.fetchUserReservations();
+      await this.fetchAllReservations();
     },
   },
   computed: {
-    ...mapGetters(["getUserReservations"]),
+    ...mapGetters(["getAllReservations"]),
   },
   created() {
     this.fetchReservations();

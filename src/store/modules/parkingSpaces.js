@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const url = 'https://demo.smart.sum.ba/parking?withParkingSpaces=1'
+
 const state = {
     parkingSpaces: []
 }
@@ -10,7 +12,7 @@ const getters = {
 
 const actions = {
     async fetchParkingSpaces({ commit }) {
-        const response = await axios.get('https://demo.smart.sum.ba/parking?withParkingSpaces=1')
+        const response = await axios.get(url)
 
         commit('setParkingSpaces', response.data)
     }

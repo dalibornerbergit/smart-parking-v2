@@ -95,6 +95,19 @@
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <!-- Only if admin -->
+        <div v-if="getUser">
+          <v-list-item v-if="getUser.role === 'admin'" to="/all-reservations">
+            <v-list-item-icon>
+              <v-icon class="white--text">mdi-ticket-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="white--text text-capitalize"
+                >all reservations</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -105,7 +118,6 @@ import { mapGetters } from "vuex";
 export default {
   data: () => ({
     drawer: false,
-    email: "",
     links: [
       { icon: "mdi-home", text: "home", route: "/" },
       { icon: "mdi-monitor-dashboard", text: "dashboard", route: "/dashboard" },
@@ -125,7 +137,7 @@ export default {
   methods: {
     logOut() {
       localStorage.removeItem("token");
-      this.$store.dispatch("getUser", null);
+      this.$store.dispatch("setUser", null);
       window.location.href = "/login";
     },
   },
