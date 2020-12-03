@@ -21,9 +21,22 @@
               reservation.user.email
             }}</v-card-title>
             <v-card-text class="py-2">
-              <p>{{ reservation.date | formatDate }}</p>
-              <p>{{ reservation.parking }}</p>
+              <div><b>Paking: </b>{{ reservation.parking }}</div>
+              <div><b>Date: </b>{{ reservation.date | formatDate }}</div>
+              <div><b>Arrival: </b>{{ reservation.time }}</div>
+              <div><b>Time of retention: </b>{{ reservation.quantity }} h</div>
             </v-card-text>
+            <v-card-actions class="pa-4">
+              <v-spacer></v-spacer>
+              <v-btn
+                small
+                depressed
+                color="grey"
+                class="white--text"
+                @click="deleteReservation(reservation.id)"
+                ><v-icon small>mdi-delete</v-icon></v-btn
+              >
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -36,7 +49,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["fetchAllReservations"]),
+    ...mapActions(["fetchAllReservations", "deleteReservation"]),
     async fetchReservations() {
       await this.fetchAllReservations();
     },
